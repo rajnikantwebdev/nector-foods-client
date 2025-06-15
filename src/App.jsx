@@ -5,6 +5,7 @@ function App() {
   const [students, setStudents] = useState([]);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const userRole = localStorage.getItem("role");
 
   useEffect(() => {
     const fetchStudentData = async () => {
@@ -31,6 +32,29 @@ function App() {
     fetchStudentData();
   }, []);
 
+  const handleDelete = async (rollNo, idx) => {
+    if (
+      !confirm(
+        `Are you sure you want to delete student with Roll No: ${rollNo}?`
+      )
+    ) {
+      return;
+    }
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_SERVER_URL}/api/student/${idx + 1}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log("response: ", response)
+    } catch (error) {
+      console.log("unable to delte user, try again later")
+    }
+  };
+
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Student Data</h1>
@@ -45,6 +69,9 @@ function App() {
               <th className="border border-gray-300 px-4 py-2">College</th>
               <th className="border border-gray-300 px-4 py-2">Course</th>
               <th className="border border-gray-300 px-4 py-2">Marks</th>
+              {userRole === "admin" && (
+                <th className="border border-gray-300 px-4 py-2">Actions</th>
+              )}
             </tr>
           </thead>
           <tbody>
@@ -65,6 +92,16 @@ function App() {
                 <td className="border border-gray-300 px-4 py-2">
                   {student.marks}
                 </td>
+                {userRole === "admin" && (
+                  <td className="border text-center border-gray-300 px-4 py-2">
+                    <button
+                      onClick={() => handleDelete(student.roll_no ,index)}
+                      className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 cursor-pointer"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>

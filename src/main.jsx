@@ -5,10 +5,12 @@ import App from './App.jsx'
 import { BrowserRouter, Routes, Route } from "react-router";
 import RegisterForm from './components/RegisterForm.jsx';
 import LoginForm from './components/LoginForm.jsx';
+import Navbar from './components/Navbar.jsx';
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
+    <Navbar/>
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/register" element={<RegisterForm />} />

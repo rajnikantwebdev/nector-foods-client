@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios"
 import { Link } from "react-router";
+import { useNavigate } from "react-router";
 
 const RegisterForm = () => {
     const [userData, setUserData] = useState({
@@ -10,17 +11,24 @@ const RegisterForm = () => {
     })
     const [successMessage, setSuccessMessage] = useState(null)
     const [isUserRegistered, setIsUserRegistered] = useState(false);
-
+    const navigate = useNavigate();
     const handleFormSubmission = async (e) => {
         e.preventDefault();
         try {
             const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/register`, userData)
             if(response && response.status === 200) {
                 setSuccessMessage(response?.data?.messsage)
-                setIsUserRegistered(true)
+                setIsUserRegistered(true);
+                setTimeout(() => {
+                  navigate("/login")
+                }, 2000)
             }
         } catch (error) {
             console.log("register error: ", error)
+        } finally {
+          setTimeout(() => {
+            setIsUserRegistered(false)
+          }, 2000)
         }
     }
 
@@ -125,7 +133,7 @@ const RegisterForm = () => {
               Login here
             </Link>
           </p>
-          <div>{successMessage}</div>
+          <div>{isUserRegistered && successMessage}</div>
         </form>
       </div>
     </div>
