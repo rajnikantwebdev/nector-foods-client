@@ -1,11 +1,10 @@
 import App from "./App.jsx";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router";
+import { Routes, Route, useLocation } from "react-router";
 import RegisterForm from "./components/RegisterForm.jsx";
 import LoginForm from "./components/LoginForm.jsx";
 import Navbar from "./components/Navbar.jsx";
 import ProtectedRoute from "./components/ProtectedRoutes.jsx";
 import PublicRoute from "./components/PublicRoute.jsx";
-import currentRoute from "../utils/currentRoute.js";
 
 const Layout = () => {
     const location = useLocation()
