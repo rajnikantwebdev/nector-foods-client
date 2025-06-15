@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 function App() {
   const [students, setStudents] = useState([]);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const userRole = localStorage.getItem("role");
-
+  
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
@@ -49,7 +50,9 @@ function App() {
           },
         }
       );
-      console.log("response: ", response)
+      if(response && response.status == 200) {
+        alert("Student deleted successfully!")
+      }
     } catch (error) {
       console.log("unable to delte user, try again later")
     }
