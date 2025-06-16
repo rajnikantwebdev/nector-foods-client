@@ -7,7 +7,8 @@ function App() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const userRole = localStorage.getItem("role");
-  
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
@@ -22,6 +23,7 @@ function App() {
         setStudents(response.data.data || []);
         setMessage(response.data.message);
         setError("");
+        setIsLoading(false)
       } catch (error) {
         console.error("Error fetching student data:", error);
         setError(
@@ -63,7 +65,9 @@ function App() {
       <h1 className="text-2xl font-bold mb-4">Student Data</h1>
       {message && <p className="text-green-500 mb-4">{message}</p>}
       {error && <p className="text-red-500 mb-4">{error}</p>}
-      {students.length > 0 ? (
+      {isLoading ? (<div>
+        <span>hang on, we are fetching the data...</span>
+      </div>) : students.length > 0 ? (
         <table className="min-w-full border-collapse border border-gray-300">
           <thead>
             <tr className="bg-gray-100">
