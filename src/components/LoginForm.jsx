@@ -60,9 +60,9 @@ const LoginForm = () => {
         <div class="text-center mb-12">
           <a href="javascript:void(0)">
             <img
-              src="https://readymadeui.com/readymadeui.svg"
+              src="/nector-logo.png"
               alt="logo"
-              class="w-40 inline-block"
+              class="w-60 inline-block"
             />
           </a>
         </div>

@@ -17,7 +17,7 @@ const RegisterForm = () => {
         try {
             const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/register`, userData)
             if(response && response.status === 200) {
-                setSuccessMessage(response?.data?.messsage)
+                setSuccessMessage(response?.data?.message)
                 setIsUserRegistered(true);
                 setTimeout(() => {
                   navigate("/login")
@@ -50,9 +50,9 @@ const RegisterForm = () => {
         <div class="text-center mb-12">
           <a href="javascript:void(0)">
             <img
-              src="https://readymadeui.com/readymadeui.svg"
+              src="/nector-logo.png"
               alt="logo"
-              class="w-40 inline-block"
+              class="w-60 inline-block"
             />
           </a>
         </div>
@@ -133,7 +133,9 @@ const RegisterForm = () => {
               Login here
             </Link>
           </p>
-          <div>{isUserRegistered && successMessage}</div>
+          <div className="text-center py-2">
+            {isUserRegistered && successMessage}
+          </div>
         </form>
       </div>
     </div>
